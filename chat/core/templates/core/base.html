@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>  {% block title %} Chat {% endblock %}</title>
+<link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+
+</head>
+<body>
+    <div class='header'>
+        <div class='container'>
+          <h1>Chat</h1>
+          <ul class='nav-menu '>
+            {% if request.user.is_authenticated %} 
+        <li>
+            <a href="/rooms/">Rooms</a>   
+           
+        </li>
+             {% else %}
+       <a href="/login/">Login</a>        
+                  
+              </ul>
+         <div class='btn-group'>
+      <button class='btn'  href="/cadastro/" >
+      <a  href="/cadastro/" >  Entrar
+      </a>
+       {% endif %}
+       </button>
+   </div>
+  
+ 
+  
+        </div>
+       
+      </div> 
+      {% block content %}
+      {% endblock %} 
+</body>
+</html>

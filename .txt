@@ -1,0 +1,16 @@
+pip install django
+pip freeze ler as bibliotecas que eu instalei 
+django-admin startproject (nome do projeto)
+entra na pasta 
+django-admin startapp app_cad_usuarios
+rodar o projeto escreve  onde tem o arquivo manage
+python manage.py runserver
+
+
+python manage.py migrate (criar o banco)
+python manage.py makemigrations  atualizar o banco
+
+python manage.py createsuperuser (criar um super usuario)
+
+usuario = chat 
+senha =123

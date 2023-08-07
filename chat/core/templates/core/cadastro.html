@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+
+{% block title %} Cadastro {% endblock %}
+
+{% block content %}
+
+<div class='pagina'>
+
+    <!-- {/* lado esquerdo site */} -->
+
+  <div class='center'>
+  <!-- <Link class='icone-x' href='/mychat/appchat/templates/appchat/frontpage.html' >   
+   <img  src={icone}  alt="Logo"/></Link> -->
+
+  
+   <h1 class='titulologin' >Cadastro </h1>
+      
+   <form method="post" action="/login/">
+    {% csrf_token %}
+   
+    <div class="form-group">
+
+   <input class='input'
+      type="text"
+      placeholder="Nome "
+      name="username"
+      
+ />
+                    <input 
+                        type="password" 
+                        name="password1" 
+                        placeholder="Password"
+                       
+                        />
+<input
+
+   type="password"
+      placeholder="Confirm password"
+      name="password2"
+
+    />
+                       </div>
+     {% if form.errors %}
+     {% for field in form %}
+       {% for error in field.errors %} 
+       <div class="mb-5 p-4 rounded-xl bg-red-300 text-white">
+         <p>{{ error|escape }}</p>
+          </div>
+         {% endfor %}
+            {% endfor %}
+          {% endif %}
+                       
+
+                <button  class="btn-login-cadastro">Cadastrar</button>
+            </form>
+
+<a  class="senha"  href='/login/' >
+Ja possui conta? <strong>Fazer Login </strong>
+
+
+</a>
+
+
+        </div>
+
+    </div>
+
+    </div>
+
+{% endblock %}

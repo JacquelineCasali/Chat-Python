@@ -1,0 +1,65 @@
+{% extends "core/base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+<div class='pagina'>
+
+    <!-- {/* lado esquerdo site */} -->
+
+  <div class='center'>
+  <!-- <Link class='icone-x' href='/mychat/appchat/templates/appchat/frontpage.html' >   
+   <img  src={icone}  alt="Logo"/></Link> -->
+
+  
+   <h1 class='titulologin' >Login </h1>
+      
+   <form method="post" action="../">
+    {% csrf_token %}
+   
+    <div class="form-group">
+
+   <input class='input'
+      type="text"
+      placeholder="Nome "
+      name="username"
+      
+ />
+                    <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Password"
+                       
+                        />
+
+                       </div>
+     {% if form.errors %}
+     
+     {% for field in form %}
+       {% for error in field.errors %} 
+       <div class="mb-5 p-4 rounded-xl bg-red-300 text-white">
+         <p>{{ error|escape }}</p>
+          </div>
+         {% endfor %}
+            {% endfor %}
+          {% endif %}
+                       
+
+                <button  class="btn-login-cadastro">Logar</button>
+            </form>
+
+<a  class="senha"  href='/cadastro/' >
+Não possui conta? <strong>Fazer Cadastro </strong>
+
+
+</a>
+
+
+        </div>
+
+    </div>
+
+    </div>
+
+{% endblock %}
