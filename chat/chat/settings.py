@@ -15,10 +15,7 @@ SECRET_KEY = 'django-insecure--2e-ql*x33pqln9p1-0^jb&7j$y&!250(47ea1%pdl+7bq)-)+
 DEBUG = True
 
 ALLOWED_HOSTS = []
-# deletar
-LOGOUT_REDIRECT_URL='/'
-LOGIN_REDIRECT_URL='/rooms/'
-LOGIN_URL='/login/'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -29,7 +26,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'channels',
-    'core',
     'room',
 ]
 
@@ -64,6 +60,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'chat.wsgi.application'
 ASGI_APPLICATION = 'chat.asgi.application'
 
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

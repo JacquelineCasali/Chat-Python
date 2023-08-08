@@ -1,4 +1,4 @@
-{% extends "core/base.html" %}
+{% extends "room/base.html" %}
 {% block title %} {{room.name}} {% endblock %}
 
 {% block content %}
@@ -7,46 +7,50 @@
 <div class="pagina">
     <div class="center">
   <div class="menu">
+    <a href="..">
+
     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
         <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
-      </svg>
+      </svg></a>
     
       <div class="sub-main">
-      
-        <a   href="">Mensagem</a>
-        <h5  class="titulochat" >{{ room.name }}</h5>
+        <div class="titulo">Mensagem</div>
+        <!-- <a   href="">Mensagem</a> -->
+        <h5  class="titulo" >{{ room.name }}</h5>
     </div> 
 
 
 </div>
 
-<div class="friends">
+<div class="batepapo">
 
 <div class="papos">
-    {% for room in rooms %}
- <div class="messageInfo">
-    <span> {{room.name}}</span>
-    <p class="p">Ola</p>
+  
+ <div class="messageInfo" id="chat-messages">
+    {% for m in messages %}<b>{{ m.user.username }}</b>: {{ m.content }}<br>{% endfor %} 
+    
+    <span> {{ room.name }}</span>
+    <p >Ola</p>
     
     </div>
-{%endfor%}
+
  <div class="messageInfo">
-    <h2>Name1</h2>
+    <span> {{ room.name }}</span>
     <p >Ola</p>
     
     </div>
     <div class="messageInfo">
-        <span>Name2</span>
+        <span> {{ room.name }}</span>
         <p >Ola</p>
         
         </div>
 
-    </div>
-    <form  action="">
+    </div> 
+    <form method="post" action="..">
         <div class="forms">     
-        <input class="input1"   type="text" id="input" placeholder="Digite a Mensagem">
+        <input class="input1" name="content"  type="text" id="chat-message-input" placeholder="Digite a Mensagem">
     </div>
-        <button type="submit" id="submit">Enviar</button>
+        <button type="submit" id="chat-message-submit">Enviar</button>
   
     </form>
 
@@ -55,6 +59,71 @@
 </div>
 </div>
 </div>
-</div>
 
+
+
+{% endblock %} 
+{% block script %}
+
+{{ room.slug|json_script:"json-roomname" }}
+{{request.user.userName | json_script:"json-username"}}
+<script >
+//     // conectando o servidor
+    const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
+    const userName = JSON.parse(document.getElementById('json-username').textContent); 
+    const chatSocket  =new WebSocket(
+        'ws://'
+        +window.location.host
+        +'/'
+        +roomName
+        +"/"
+    );
+
+    chatSocket.onclose=function(e){
+        console.log('onclose')
+    }
+
+     chatSocket.onmessage=function(e){
+        const data =JSON.parse(e.data);
+        if (data.message){
+       document.querySelector('#chat-messages').innerHTML+=('<b>' + data.username + '</b>: ' + data.message + '<br>');
+        }else {
+            alet('A mensagem estava vazia');
+        }
+        scrollToBottom();
+    };
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+
+    document.querySelector('#chat-message-submit').onclick=function(e){
+        e.preventDefault()
+        const messageInputDom  = document.querySelector('#chat-messagem-input')
+        const message=messageInputDom.value;
+        console.log({
+            'message': message,
+            'username': userName,
+            'room': roomName
+            })
+
+        socket.send(JSON.stringify({
+            'mensagem':message,
+            'userName': userName,
+            'room': roomName
+        }));
+        messageInputDom.value = '';
+        return false
+       };
+       function scrollToBottom() {
+        let objDiv = document.getElementById("chat-messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+ 
+     scrollToBottom();
+</script>
 {% endblock %} 

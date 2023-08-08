@@ -1,4 +1,4 @@
-{% extends "core/base.html" %}
+{% extends "room/base.html" %}
 {% block title %} Room {% endblock %}
 
 {% block content %}
@@ -6,7 +6,7 @@
 <div class="pagina">
   <div class="center">
 
-
+    <div class="batepapo">
     <div class="logo">
     ChatMe
     </div>
@@ -14,21 +14,25 @@
 
 <div class="titulo">Lista de Usuários</div>
 
-
+</div>
 
     {% for room in rooms %}
-    <div class="friends">
+
+     <div class="friends">
  
     
+
+   
       <div class="name">
-        <h5 >  <a href="{% url 'room' room.slug %}"> {{room.name}}</a>
-           </h5>
+          <a href="{% url 'room' room.slug %}"><h5 > {{room.name}}</h5>
+
+          </a>
+           
 
     
     </div>
     </div>
 
-    
 {%endfor%} 
 <footer>
   
